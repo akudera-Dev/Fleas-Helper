@@ -7,6 +7,8 @@
 </template>
 
 <style scoped lang="scss">
+@use "@/styles/mixins.scss" as *;
+
 .header {
   display: flex;
   flex-direction: column;
@@ -20,6 +22,7 @@
   font-weight: 700;
   color: var(--color-accent);
   text-align: center;
+  @include fluid-text(32, 40);
 }
 
 .subtitle {
