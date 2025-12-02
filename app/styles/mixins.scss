@@ -1,0 +1,25 @@
+@use "./functions.scss" as *;
+
+@mixin fluid-text($min, $max) {
+  font-size: u-clamp($min, 1200, $max);
+}
+
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    &:active {
+      @content;
+    }
+  }
+}
+
+@mixin plate-style {
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  background-color: var(--color-plate-bg);
+}
