@@ -16,10 +16,15 @@
 
   --color-border: #ffffff0d;
 
+  --border-primary: 2px solid var(--color-border);
+
   --font-primary: "FiraSans", serif;
   --font-accent: "Cinzel", serif;
 
   --border-radius-lg: 12px;
+  --border-radius-md: 6px;
 
+  --transition-duration-long: 0.3s;
   --transition-duration: 0.2s;
+  --transition-duration-short: 0.1s;
 }

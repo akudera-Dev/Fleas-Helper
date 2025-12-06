@@ -1,9 +1,12 @@
 import * as aesjs from "aes-js";
 
 class FileDecode {
-  private KEY_STRING = "UKu52ePUBwetZ9wNX88o54dnfKRu0T1l" as const;
+  private static KEY_STRING = "UKu52ePUBwetZ9wNX88o54dnfKRu0T1l" as const;
 
-  public async getDecode(file: File) {
+  /**
+   * @throws { SyntaxError } via parsing invalid JSON from file.
+   */
+  public static async getDecode(file: File) {
     const textContent = await file.text();
 
     const base64Regex = /[A-Za-z0-9+/]{100,}(={0,2})/g;
@@ -18,7 +21,7 @@ class FileDecode {
     const encryptedBase64 = matches.reduce((a, b) => (a.length > b.length ? a : b));
 
     // Декодируем Base64 -> Байты
-    const binaryString = window.atob(encryptedBase64);
+    const binaryString = atob(encryptedBase64);
     let bytes = new Uint8Array(binaryString.length);
     for (let i = 0; i < binaryString.length; i++) {
       bytes[i] = binaryString.charCodeAt(i);

@@ -7,13 +7,16 @@
 </template>
 
 <script setup lang="ts">
-const { file } = await useFileContext();
+import { useFleasDetails } from "~/stores/fleasDetails";
 
-const props = defineEmits(["clearErrors"]);
+const fleasDetailsStore = useFleasDetails();
+const { file } = storeToRefs(fleasDetailsStore);
+
+const emits = defineEmits(["clearErrors"]);
 
 function closeFileInfo() {
-  props("clearErrors");
-  useFileContext(null);
+  emits("clearErrors");
+  file.value = null;
 }
 </script>
 

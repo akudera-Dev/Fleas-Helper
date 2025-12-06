@@ -8,21 +8,23 @@
     <FleasFileInfo v-if="isFileUploaded || errorMessage" @clear-errors="clearErrors">{{
       errorMessage
     }}</FleasFileInfo>
-    <div class="file-upload" v-else>
+    <template v-else>
       <label for="file-upload" class="label">
         <IconsUploadSVG class="label-icon" />
         <h2 class="label-title">Upload Save File</h2>
         <span class="description">Drag and drop or chose your save file</span>
         <input type="file" id="file-upload" class="visually-hidden" @change="onChange" />
       </label>
-    </div>
+    </template>
   </section>
 </template>
 
 <script setup lang="ts">
 import { useDropZone } from "@vueuse/core";
+import { useFleasDetails } from "~/stores/fleasDetails";
 
-const { file } = await useFileContext();
+const fleasDetailsStore = useFleasDetails();
+const { file, fileContext } = storeToRefs(fleasDetailsStore);
 
 const isFileUploaded = computed(() => !!file.value);
 const errorMessage = ref<string | null>();
@@ -50,7 +52,12 @@ async function fileHandle(files: File[] | null) {
   try {
     errorMessage.value = null;
 
-    file.value = (await useFileContext(uploadedFile)).file.value;
+    const context = await FileDecode.getDecode(uploadedFile);
+
+    if (context) {
+      file.value = uploadedFile;
+      fileContext.value = context;
+    }
   } catch (error) {
     console.error(error);
     errorMessage.value = `Error: File is corrupted or you uploaded not a *.dat file`;
@@ -60,30 +67,36 @@ async function fileHandle(files: File[] | null) {
 
 <style scoped lang="scss">
 @use "@/styles/mixins.scss" as *;
-
 .overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
 }
 
 .file-container {
   margin-top: 30px;
 }
 
-.file-upload {
+.label {
   @include plate-style;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   max-height: 300px;
+  width: 100%;
   height: 100%;
+  padding-block: 60px;
   border-style: dashed;
-  transition-property: border-color, transform;
-  transition-duration: var(--transition-duration);
+  transition: border-color var(--transition-duration), transform var(--transition-duration),
+    background-color var(--transition-duration-short);
   -webkit-tap-highlight-color: transparent;
 
   @include only-desktop-hover {
@@ -94,15 +107,11 @@ async function fileHandle(files: File[] | null) {
   &:active {
     background-color: var(--color-hover-bg);
   }
-}
 
-.label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  padding-block: 60px;
+  &:has(input:focus) {
+    border-color: var(--color-accent);
+    transform: scale(1.01);
+  }
 
   &-icon {
     color: var(--color-accent);
