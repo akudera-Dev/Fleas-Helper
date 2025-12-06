@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-This project is a modern web-based tool designed to help players of "Hollow Knight: Silksong" track their progress in collecting "fleas". It parses save files to identify which fleas have been collected and provides links to Map Genie.
+This project is web tool designed to help players of "Hollow Knight: Silksong" track their progress in collecting "fleas". It parses save files to identify which fleas have been collected and provides links to Map Genie.
 
-> **Note**: This project is currently a Work in Progress (WIP), migrating the original tool to a modern Nuxt 3 stack.
+> **Note**: This project is currently a Work in Progress.
 
 ## Features & Roadmap
 
@@ -15,28 +15,26 @@ This project is a modern web-based tool designed to help players of "Hollow Knig
 
 ### 2. Flea Collection Tracking
 
-- [ ] **Data Extraction**: Extract `SavedFlea_` keys from the `playerData` object _(From Save File)_.
-- [ ] **Status Display**: Display a table of all tracked fleas with their current status (Found ✓ / Missing ✗).
+- [x] **Data Extraction**: Extract `SavedFlea_` keys from the `playerData` object _(From Save File)_.
+- [x] **Status Display**: Display a list of all tracked fleas with their current status (Found ✓ / Missing ✗).
 
 ### 3. Map Integration
 
-- [ ] **Map Genie Links**: Direct links to specific locations on Map Genie for missing fleas.
+- [x] **Map Genie Links**: Direct links to specific locations on Map Genie for each flea.
 - [ ] **Missing Flea Summary**: A section summarizing all missing fleas with a "View All" map link.
 
 ### 4. User Interface
 
-- [ ] **Visual Feedback**: Clear icons and status indicators.
-- [ ] **Error Handling**: Robust error messages for invalid or corrupted files.
-- [ ] **Modern Design**: "Premium" look with dark theme.
+- [x] **Visual Feedback**: Clear icons, status indicators, and filter buttons (All/Found/Missing).
+- [x] **Error Handling**: Robust error messages for invalid or corrupted files.
+- [x] **Modern Design**: game theme look.
 - [ ] **Progress Bar**: Visual indicator of overall progress (e.g., "20/27 Fleas Found").
-- [ ] **Responsive Design**: Mobile-friendly layout.
+- [x] **Responsive Design**: Mobile-friendly layout.
 
 ### 5. Advanced Features (Planned)
 
 - [ ] **Local Storage**: Save last file.
 - [ ] **History**: Store recently uploaded files for quick access.
-- [ ] **Export Data**: Export missing flea list as Text/JSON.
-- [ ] **Spoiler Protection**: Option to hide area names for unfound fleas.
 - [ ] **PWA Support**: Installable as an offline-capable app.
 
 ## Technical Stack
