@@ -64,5 +64,4 @@ This project is web tool designed to help players of "Hollow Knight: Silksong" t
 ### 5. Advanced Features (Planned)
 
 - [ ] **Local Storage**: Save last file.
-- [ ] **History**: Store recently uploaded files for quick access.
 - [ ] **PWA Support**: Installable as an offline-capable app.
