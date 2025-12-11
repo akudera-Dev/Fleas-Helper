@@ -1,0 +1,12 @@
+# Documentation
+README.md
+
+# Git metadata
+.github
+.gitignore
+
+# Preview/screenshot images in root
+Preview.jpg
+
+# IDE files
+.vscode
