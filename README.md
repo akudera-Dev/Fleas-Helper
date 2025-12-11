@@ -51,7 +51,7 @@ This project is web tool designed to help players of "Hollow Knight: Silksong" t
 ### 3. Map Integration
 
 - [x] **Map Genie Links**: Direct links to specific locations on Map Genie for each flea.
-- [ ] **Missing Flea Summary**: A section summarizing all missing fleas with a "View All" map link.
+- [x] **Missing Flea Summary**: A section summarizing all missing fleas with a "View All" map link.
 
 ### 4. User Interface
 
