@@ -1,50 +1,10 @@
 <template>
   <div class="fleas-checklist container">
-    <header class="checklist-header">
-      <h2 class="title">Flea checklist</h2>
-      <div class="controllers">
-        <a
-          :href="`https://mapgenie.io/hollow-knight-silksong/maps/pharloom?locationIds=${Object.entries(
-            FLEAS_DATA
-          )
-            .flatMap(([key, fleaDetails]) => {
-              return fleasStatus[key] === false ? [fleaDetails.mapCoordinates] : [];
-            })
-            .join(',')}`"
-          target="_blank"
-          class="view-all-link"
-        >
-          <IconsMap width="25" class="view-all-map" />
-          View all missing
-        </a>
-        <div class="filter-group">
-          <button
-            type="button"
-            class="filter-button"
-            :class="filteringBy === 'all' ? 'active' : ''"
-            @click="filteringBy = 'all'"
-          >
-            All
-          </button>
-          <button
-            type="button"
-            class="filter-button"
-            :class="filteringBy === 'found' ? 'active' : ''"
-            @click="filteringBy = 'found'"
-          >
-            Found
-          </button>
-          <button
-            type="button"
-            class="filter-button"
-            :class="filteringBy === 'missing' ? 'active' : ''"
-            @click="filteringBy = 'missing'"
-          >
-            Missing
-          </button>
-        </div>
-      </div>
-    </header>
+    <FleasChecklistHeader
+      :filtering-by="filteringBy"
+      :fleasStatus="fleasStatus"
+      @filtering-change="changeFiltering"
+    />
     <div class="checklist">
       <TransitionGroup
         tag="div"
@@ -91,7 +51,11 @@
 const fleasDetailsStore = useFleasDetails();
 const { fleasStatus } = storeToRefs(fleasDetailsStore);
 
-const filteringBy = ref<"all" | "found" | "missing">("all");
+type TFilteringBy = "all" | "found" | "missing";
+const filteringBy = ref<TFilteringBy>("all");
+function changeFiltering(newValue: TFilteringBy) {
+  filteringBy.value = newValue;
+}
 
 const fleasToDisplay = computed(() => {
   return Object.entries(FLEAS_DATA)
@@ -153,79 +117,6 @@ function onStateButtonClick(fleaKeyName: string) {
   font-family: var(--font-primary);
   font-weight: 500;
   color: var(--color-muted);
-}
-
-.title {
-  font-family: var(--font-primary);
-  @include fluid-text(18, 20);
-  color: var(--color-accent);
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
-
-.controllers {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.filter-group {
-  display: flex;
-  align-items: center;
-  column-gap: 10px;
-}
-
-.view-all-link {
-  display: inline-flex;
-  align-items: center;
-  column-gap: 4px;
-  padding: 4px 17px;
-  border: 1px solid var(--color-accent);
-  background-color: transparent;
-  font-family: var(--font-primary);
-  @include fluid-text(14, 16);
-  color: var(--color-accent);
-  border-radius: var(--border-radius-md);
-  transition: background-color var(--transition-duration);
-  text-decoration: none;
-
-  @include hover {
-    background-color: rgba(196, 130, 89, 0.3);
-  }
-}
-
-.filter-button {
-  padding: 4px 17px;
-  border: none;
-  background-color: var(--color-light);
-  font-family: var(--font-primary);
-  @include fluid-text(14, 16);
-  border-radius: var(--border-radius-md);
-  transition-property: background-color, color;
-  transition-duration: var(--transition-duration);
-
-  &:not(.active) {
-    @include hover {
-      background-color: #d7cac2;
-    }
-  }
-
-  &.active {
-    background-color: var(--color-accent);
-    color: var(--color-text-primary);
-  }
-}
-
-.checklist-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 25px;
-  column-gap: 8px;
 }
 
 .flea-details {
