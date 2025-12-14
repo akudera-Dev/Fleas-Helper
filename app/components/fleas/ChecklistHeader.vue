@@ -115,21 +115,17 @@ const props = defineProps<IProps>();
 
 .checklist-header {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   margin-top: 25px;
-  column-gap: 8px;
+  gap: 10px 8px;
 }
 
 .title {
   font-family: var(--font-primary);
   @include fluid-text(18, 20);
   color: var(--color-accent);
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
 }
 
 .controllers {
