@@ -35,7 +35,7 @@ export default defineNuxtConfig({
         },
         {
           name: "theme-color",
-          content: "#c48259",
+          content: "#0b1a24",
         },
       ],
     },
@@ -57,8 +57,8 @@ export default defineNuxtConfig({
       name: "Fleas Helper",
       short_name: "Fleas Helper",
       description: "Interactive checklist for collecting all fleas in Silksong",
-      theme_color: "#c48259",
-      background_color: "#132634",
+      theme_color: "#0b1a24",
+      background_color: "#0b1a24",
       display: "standalone",
       icons: [
         {
