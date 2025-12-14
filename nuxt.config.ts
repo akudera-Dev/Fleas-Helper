@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  modules: ["@pinia/nuxt"],
+  modules: ["@pinia/nuxt", "@vite-pwa/nuxt"],
   css: ["@/styles/main.scss"],
   routeRules: {
     "/": { redirect: "/fleas" },
@@ -46,5 +46,40 @@ export default defineNuxtConfig({
   },
   devServer: {
     host: "",
+  },
+  pwa: {
+    registerType: "autoUpdate",
+    manifest: {
+      name: "Fleas Helper",
+      short_name: "Fleas Helper",
+      description: "Interactive checklist for collecting all fleas in Silksong",
+      theme_color: "#c48259",
+      background_color: "#132634",
+      display: "standalone",
+      icons: [
+        {
+          src: "/web-app-manifest-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+          purpose: "maskable",
+        },
+        {
+          src: "/web-app-manifest-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "maskable",
+        },
+        {
+          src: "/favicon.png",
+          sizes: "96x96",
+          type: "image/png",
+          purpose: "any",
+        },
+      ],
+    },
+    workbox: {
+      navigateFallback: "/",
+      globPatterns: ["**/*.{js,css,html,png,svg,ico,woff2}"],
+    },
   },
 });
