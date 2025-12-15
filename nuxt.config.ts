@@ -82,7 +82,7 @@ export default defineNuxtConfig({
       ],
     },
     workbox: {
-      navigateFallback: "/",
+      navigateFallback: "/fleas",
       globPatterns: ["**/*.{js,css,html,png,svg,ico,woff2}"],
     },
   },
