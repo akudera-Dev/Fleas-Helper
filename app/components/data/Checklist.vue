@@ -1,35 +1,36 @@
 <template>
-  <div class="fleas-checklist container">
-    <FleasChecklistHeader
-      :filtering-by="filteringBy"
-      :fleasStatus="fleasStatus"
-      @filtering-change="changeFiltering"
+  <div class="checklist-container container">
+    <DataChecklistHeader
+      v-model:filter="filteringBy"
+      :items="items"
+      :items-status="itemsStatus"
+      :title="title"
     />
     <div class="checklist">
       <TransitionGroup
         tag="div"
         :name="transitionName"
-        v-if="filteringBy === 'all' || fleasToDisplay.length > 0"
+        v-if="filteringBy === 'all' || itemsToDisplay.length > 0"
       >
-        <div v-for="fleaDetails in fleasToDisplay" :key="fleaDetails.keyName" class="flea-details">
+        <div v-for="item in itemsToDisplay" :key="item.keyName" class="item-details">
           <div>
-            <span> #{{ fleaDetails.index }} </span>
+            <span> #{{ item.index }} </span>
             <a
-              :href="`https://mapgenie.io/hollow-knight-silksong/maps/pharloom?locationIds=${fleaDetails.mapCoordinates}`"
+              :href="`https://mapgenie.io/hollow-knight-silksong/maps/pharloom?locationIds=${item.mapCoordinates}`"
               target="_blank"
             >
               <IconsMap width="20" class="view-all-map" />
-              {{ fleaDetails.biome }}
+              {{ item.biome }}
             </a>
           </div>
           <ClientOnly>
             <button
               type="button"
-              @click="() => onStateButtonClick(fleaDetails.keyName)"
+              @click="onStateButtonClick(item.keyName)"
               class="state-button"
-              :class="fleaDetails.isFound ? 'found' : 'missing'"
+              :class="item.isFound ? 'found' : 'missing'"
             >
-              {{ fleaDetails.isFound ? "Found" : "Missing" }}
+              {{ item.isFound ? "Found" : "Missing" }}
             </button>
           </ClientOnly>
         </div>
@@ -38,8 +39,8 @@
         <p>
           {{
             filteringBy === "found"
-              ? "You haven't rescued a single flea yet :("
-              : "You have rescued all fleas!"
+              ? "You haven't found a single item yet :("
+              : "You have found all items!"
           }}
         </p>
       </div>
@@ -48,42 +49,49 @@
 </template>
 
 <script setup lang="ts">
-const fleasDetailsStore = useFleasDetails();
-const { fleasStatus } = storeToRefs(fleasDetailsStore);
+import type { ItemDetails } from "~/utils/fileData";
+
+type TKey = string;
+interface IProps {
+  title: string;
+  items: Record<TKey, ItemDetails>;
+  itemsStatus: Record<TKey, boolean>;
+}
+
+const props = defineProps<IProps>();
+
+interface IEmits {
+  (e: "toggle-status", key: TKey): void;
+}
+const emits = defineEmits<IEmits>();
 
 type TFilteringBy = "all" | "found" | "missing";
 const filteringBy = ref<TFilteringBy>("all");
-function changeFiltering(newValue: TFilteringBy) {
-  filteringBy.value = newValue;
-}
 
-const fleasToDisplay = computed(() => {
-  return Object.entries(FLEAS_DATA)
-    .map(([keyName, fleaDetails], index) => {
-      const isFound = fleasStatus.value[keyName] || false;
+const itemsToDisplay = computed(() => {
+  return Object.entries(props.items)
+    .map(([keyName, itemDetails], index) => {
+      const isFound = props.itemsStatus[keyName] || false;
       return {
         keyName,
         index: index + 1,
-        ...fleaDetails,
+        ...itemDetails,
         isFound,
       };
     })
     .filter(
-      (flea) =>
-        (filteringBy.value === "found" && flea.isFound) ||
-        (filteringBy.value === "missing" && !flea.isFound) ||
+      (item) =>
+        (filteringBy.value === "found" && item.isFound) ||
+        (filteringBy.value === "missing" && !item.isFound) ||
         filteringBy.value === "all"
     );
 });
 
 const transitionName = ref<"list" | "">("");
-function onStateButtonClick(fleaKeyName: string) {
+
+function onStateButtonClick(itemKeyName: string) {
   transitionName.value = "list";
-
-  const key = fleaKeyName as keyof typeof FLEAS_DATA;
-  if (!Object.hasOwn(fleasStatus.value, key)) return;
-
-  fleasStatus.value[key] = !fleasStatus.value[key];
+  emits("toggle-status", itemKeyName);
   nextTick().then(() => {
     transitionName.value = "";
   });
@@ -93,7 +101,7 @@ function onStateButtonClick(fleaKeyName: string) {
 <style scoped lang="scss">
 @use "@/styles/mixins.scss" as *;
 
-.fleas-checklist {
+.checklist-container {
   display: flex;
   flex-direction: column;
 }
@@ -117,10 +125,10 @@ function onStateButtonClick(fleaKeyName: string) {
   padding: 40px 10px;
   font-family: var(--font-primary);
   font-weight: 500;
-  color: var(--color-muted);
+  color: var(--color-text-muted);
 }
 
-.flea-details {
+.item-details {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -134,10 +142,8 @@ function onStateButtonClick(fleaKeyName: string) {
     border-top: var(--border-primary);
   }
 
-  &:nth-child(-n + 11) {
-    &:last-child {
-      border-bottom: var(--border-primary);
-    }
+  &:nth-child(-n + 11):last-child {
+    border-bottom: var(--border-primary);
   }
 
   & div {
@@ -146,7 +152,7 @@ function onStateButtonClick(fleaKeyName: string) {
     & span {
       font-family: var(--font-primary);
       font-weight: 300;
-      color: var(--color-muted);
+      color: var(--color-text-muted);
       width: 24px;
     }
 
@@ -162,7 +168,7 @@ function onStateButtonClick(fleaKeyName: string) {
       transition: color var(--transition-duration);
 
       @include hover {
-        color: var(--color-accent);
+        color: var(--color-text-accent);
       }
     }
   }
@@ -178,30 +184,30 @@ function onStateButtonClick(fleaKeyName: string) {
   -webkit-tap-highlight-color: transparent;
 
   &.missing {
-    background-color: rgba(125, 81, 116, 0.2);
-    border-color: var(--color-secondary);
-    color: var(--color-secondary);
+    background-color: var(--color-missing-bg);
+    border-color: var(--color-missing);
+    color: var(--color-missing);
 
     @include only-desktop-hover {
-      background-color: rgba(125, 81, 116, 0.35);
+      background-color: var(--color-hover-missing-bg);
     }
 
     &:active {
-      background-color: rgba(125, 81, 116, 0.28);
+      background-color: var(--color-active-missing-bg);
     }
   }
 
   &.found {
-    background-color: rgba(80, 151, 123, 0.2);
-    border-color: var(--color-success);
-    color: var(--color-success);
+    background-color: var(--color-found-bg);
+    border-color: var(--color-found);
+    color: var(--color-found);
 
     @include only-desktop-hover {
-      background-color: rgba(80, 151, 123, 0.35);
+      background-color: var(--color-hover-found-bg);
     }
 
     &:active {
-      background-color: rgba(80, 151, 123, 0.28);
+      background-color: var(--color-active-found-bg);
     }
   }
 }

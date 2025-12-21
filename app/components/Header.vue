@@ -1,7 +1,7 @@
 <template>
   <header class="header container">
-    <h1 class="title">SilkSong Fleas Helper</h1>
-    <span class="subtitle">Track missing fleas and view them on the interactive map</span>
+    <h1 class="title"><slot name="title"></slot></h1>
+    <p class="subtitle"><slot name="description"></slot></p>
     <hr />
   </header>
 </template>
@@ -14,13 +14,14 @@
   flex-direction: column;
   align-items: center;
   row-gap: 8px;
+  padding-top: 32px;
 }
 
 .title {
   font-family: var(--font-accent);
   @include fluid-text(32, 40);
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-text-accent);
   text-align: center;
 }
 
@@ -28,7 +29,7 @@
   font-family: var(--font-primary);
   @include fluid-text(14, 16);
   font-weight: 500;
-  color: var(--color-muted);
+  color: var(--color-text-muted);
   text-align: center;
 }
 
@@ -37,7 +38,7 @@ hr {
   height: 1px;
   margin-block: 40px 0;
   border: none;
-  background-color: var(--color-accent);
+  background-color: var(--color-text-accent);
 }
 
 @media (max-width: 620px) {

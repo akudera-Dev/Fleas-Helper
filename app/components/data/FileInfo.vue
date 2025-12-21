@@ -1,21 +1,23 @@
 <template>
-  <div class="fleas-info">
+  <div class="file-info">
     <span class="save-file" v-if="!!file">{{ file.name }}</span>
     <div class="error-message" v-else><slot></slot></div>
-    <button type="button" class="close-button" @click="closeFileInfo"><IconsCross /></button>
+    <button type="button" class="close-button" @click="closeFileInfo">
+      <IconsCross />
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useFleasDetails } from "~/stores/fleasDetails";
+import { useFileData } from "~/stores/fileData";
 
-const fleasDetailsStore = useFleasDetails();
-const { file } = storeToRefs(fleasDetailsStore);
+const fileDataStore = useFileData();
+const { file } = storeToRefs(fileDataStore);
 
-const emits = defineEmits(["clearErrors"]);
+const emits = defineEmits(["clear-errors"]);
 
 function closeFileInfo() {
-  emits("clearErrors");
+  emits("clear-errors");
   file.value = null;
 }
 </script>
@@ -23,7 +25,7 @@ function closeFileInfo() {
 <style scoped lang="scss">
 @use "@/styles/mixins.scss" as *;
 
-.fleas-info {
+.file-info {
   @include plate-style;
   display: flex;
   justify-content: space-between;

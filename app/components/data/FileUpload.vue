@@ -5,9 +5,9 @@
     </div>
   </Teleport>
   <section class="file-container container">
-    <FleasFileInfo v-if="isFileUploaded || errorMessage" @clear-errors="clearErrors">{{
+    <DataFileInfo v-if="isFileUploaded || errorMessage" @clear-errors="clearErrors">{{
       errorMessage
-    }}</FleasFileInfo>
+    }}</DataFileInfo>
     <template v-else>
       <label for="file-upload" class="label">
         <IconsUploadSVG class="label-icon" />
@@ -21,10 +21,10 @@
 
 <script setup lang="ts">
 import { useDropZone } from "@vueuse/core";
-import { useFleasDetails } from "~/stores/fleasDetails";
+import { useFileData } from "~/stores/fileData";
 
-const fleasDetailsStore = useFleasDetails();
-const { file, fileContext } = storeToRefs(fleasDetailsStore);
+const fileDataStore = useFileData();
+const { file, fileContext } = storeToRefs(fileDataStore);
 
 const isFileUploaded = computed(() => !!file.value);
 const errorMessage = ref<string | null>();
@@ -108,13 +108,13 @@ async function fileHandle(files: File[] | null) {
     background-color: var(--color-hover-bg);
   }
 
-  &:has(input:focus) {
+  &:has(input:focus-visible) {
     border-color: var(--color-accent);
     transform: scale(1.01);
   }
 
   &-icon {
-    color: var(--color-accent);
+    color: var(--color-text-accent);
     margin-bottom: 15px;
 
     &--uploading {
@@ -134,7 +134,7 @@ async function fileHandle(files: File[] | null) {
     font-family: var(--font-primary);
     @include fluid-text(14, 16);
     font-weight: 300;
-    color: var(--color-muted);
+    color: var(--color-text-muted);
     text-align: center;
   }
 }
