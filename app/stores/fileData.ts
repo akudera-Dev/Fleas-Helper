@@ -21,7 +21,6 @@ const useFileData = defineStore("fleaDetailsStore", () => {
   const fileContext = shallowRef<TFileContext | null>();
 
   const fileDataStatus = ref(getInitialStatus());
-  console.log(fileDataStatus);
 
   return { fileDataStatus, file, fileContext };
 });

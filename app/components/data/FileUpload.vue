@@ -69,8 +69,6 @@ async function fileHandle(files: File[] | null) {
   } catch (error) {
     console.error(error);
     if (error instanceof z.ZodError) {
-      console.warn(error);
-
       errorMessage.value =
         "Error: It seems to your save file is corrupted. Its structure is broken";
     } else {
