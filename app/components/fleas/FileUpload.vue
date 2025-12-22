@@ -1,27 +1,27 @@
 <template>
   <Teleport to="body">
-    <div class="overlay" v-if="isOverDropZone">
+    <div v-if="isOverDropZone" class="overlay">
       <IconsUploadSVG class="label-icon label-icon--uploading" width="150" />
     </div>
   </Teleport>
   <section class="file-container container">
-    <FleasFileInfo v-if="isFileUploaded || errorMessage" @clear-errors="clearErrors">{{
-      errorMessage
-    }}</FleasFileInfo>
+    <FleasFileInfo v-if="isFileUploaded || errorMessage" @clear-errors="clearErrors">
+      {{ errorMessage }}
+    </FleasFileInfo>
     <template v-else>
       <label for="file-upload" class="label">
         <IconsUploadSVG class="label-icon" />
         <h2 class="label-title">Upload Save File</h2>
         <span class="description">Drag and drop or chose your save file</span>
-        <input type="file" id="file-upload" class="visually-hidden" @change="onChange" />
+        <input id="file-upload" type="file" class="visually-hidden" @change="onChange" />
       </label>
     </template>
   </section>
 </template>
 
 <script setup lang="ts">
-import { useDropZone } from "@vueuse/core";
-import { useFleasDetails } from "~/stores/fleasDetails";
+import { useDropZone } from '@vueuse/core';
+import { useFleasDetails } from '~/stores/fleasDetails';
 
 const fleasDetailsStore = useFleasDetails();
 const { file, fileContext } = storeToRefs(fleasDetailsStore);
@@ -66,7 +66,7 @@ async function fileHandle(files: File[] | null) {
 </script>
 
 <style scoped lang="scss">
-@use "@/styles/mixins.scss" as *;
+@use '@/styles/mixins.scss' as *;
 .overlay {
   position: fixed;
   top: 0;
@@ -95,7 +95,9 @@ async function fileHandle(files: File[] | null) {
   height: 100%;
   padding-block: 60px;
   border-style: dashed;
-  transition: border-color var(--transition-duration), transform var(--transition-duration),
+  transition:
+    border-color var(--transition-duration),
+    transform var(--transition-duration),
     background-color var(--transition-duration-short);
   -webkit-tap-highlight-color: transparent;
 

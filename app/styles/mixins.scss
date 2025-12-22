@@ -1,4 +1,4 @@
-@use "./functions.scss" as *;
+@use './functions.scss' as *;
 
 @mixin fluid-text($min, $max) {
   font-size: u-clamp($min, 940, $max);

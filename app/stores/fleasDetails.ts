@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import { FLEAS_DATA } from "../utils/fleasData";
+import { defineStore } from 'pinia';
+import { FLEAS_DATA } from '../utils/fleasData';
 
-const useFleasDetails = defineStore("fleaDetailsStore", () => {
+const useFleasDetails = defineStore('fleaDetailsStore', () => {
   const file = ref<File | null | undefined>();
   const fileContext = ref<Record<string, Record<string, unknown>> | null>();
 

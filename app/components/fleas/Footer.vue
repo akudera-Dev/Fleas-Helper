@@ -12,7 +12,7 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-@use "@/styles/mixins.scss" as *;
+@use '@/styles/mixins.scss' as *;
 
 footer {
   padding-top: 25px;

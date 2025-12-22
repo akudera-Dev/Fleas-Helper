@@ -10,3 +10,8 @@ Preview.jpg
 
 # IDE files
 .vscode
+
+# Linting and formatting
+.prettierrc
+eslint.config.mjs
+.husky/

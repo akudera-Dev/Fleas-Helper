@@ -2,14 +2,14 @@
   <div class="fleas-checklist container">
     <FleasChecklistHeader
       :filtering-by="filteringBy"
-      :fleasStatus="fleasStatus"
+      :fleas-status="fleasStatus"
       @filtering-change="changeFiltering"
     />
     <div class="checklist">
       <TransitionGroup
+        v-if="filteringBy === 'all' || fleasToDisplay.length > 0"
         tag="div"
         :name="transitionName"
-        v-if="filteringBy === 'all' || fleasToDisplay.length > 0"
       >
         <div v-for="fleaDetails in fleasToDisplay" :key="fleaDetails.keyName" class="flea-details">
           <div>
@@ -25,21 +25,21 @@
           <ClientOnly>
             <button
               type="button"
-              @click="() => onStateButtonClick(fleaDetails.keyName)"
               class="state-button"
               :class="fleaDetails.isFound ? 'found' : 'missing'"
+              @click="() => onStateButtonClick(fleaDetails.keyName)"
             >
-              {{ fleaDetails.isFound ? "Found" : "Missing" }}
+              {{ fleaDetails.isFound ? 'Found' : 'Missing' }}
             </button>
           </ClientOnly>
         </div>
       </TransitionGroup>
-      <div class="not-found" v-else>
+      <div v-else class="not-found">
         <p>
           {{
-            filteringBy === "found"
+            filteringBy === 'found'
               ? "You haven't rescued a single flea yet :("
-              : "You have rescued all fleas!"
+              : 'You have rescued all fleas!'
           }}
         </p>
       </div>
@@ -51,8 +51,8 @@
 const fleasDetailsStore = useFleasDetails();
 const { fleasStatus } = storeToRefs(fleasDetailsStore);
 
-type TFilteringBy = "all" | "found" | "missing";
-const filteringBy = ref<TFilteringBy>("all");
+type TFilteringBy = 'all' | 'found' | 'missing';
+const filteringBy = ref<TFilteringBy>('all');
 function changeFiltering(newValue: TFilteringBy) {
   filteringBy.value = newValue;
 }
@@ -70,28 +70,28 @@ const fleasToDisplay = computed(() => {
     })
     .filter(
       (flea) =>
-        (filteringBy.value === "found" && flea.isFound) ||
-        (filteringBy.value === "missing" && !flea.isFound) ||
-        filteringBy.value === "all"
+        (filteringBy.value === 'found' && flea.isFound) ||
+        (filteringBy.value === 'missing' && !flea.isFound) ||
+        filteringBy.value === 'all'
     );
 });
 
-const transitionName = ref<"list" | "">("");
+const transitionName = ref<'list' | ''>('');
 function onStateButtonClick(fleaKeyName: string) {
-  transitionName.value = "list";
+  transitionName.value = 'list';
 
   const key = fleaKeyName as keyof typeof FLEAS_DATA;
   if (!Object.hasOwn(fleasStatus.value, key)) return;
 
   fleasStatus.value[key] = !fleasStatus.value[key];
   nextTick().then(() => {
-    transitionName.value = "";
+    transitionName.value = '';
   });
 }
 </script>
 
 <style scoped lang="scss">
-@use "@/styles/mixins.scss" as *;
+@use '@/styles/mixins.scss' as *;
 
 .fleas-checklist {
   display: flex;

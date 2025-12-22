@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IProps } from "./iconsInterface";
+import type { IProps } from './iconsInterface';
 
-const { width = "40", color = "currentColor" } = defineProps<IProps>();
+const { width = '40', color = 'currentColor' } = defineProps<IProps>();
 </script>

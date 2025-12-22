@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-type TFilteringBy = "all" | "found" | "missing";
+type TFilteringBy = 'all' | 'found' | 'missing';
 interface IEmits {
   filteringChange: [newValue: TFilteringBy];
 }
@@ -58,11 +58,11 @@ interface IProps {
   fleasStatus: Record<string, boolean>;
 }
 
-const props = defineProps<IProps>();
+defineProps<IProps>();
 </script>
 
 <style scoped lang="scss">
-@use "@/styles/mixins.scss" as *;
+@use '@/styles/mixins.scss' as *;
 
 .filter-group {
   display: flex;

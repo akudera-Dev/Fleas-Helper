@@ -7,7 +7,7 @@
 </template>
 
 <style scoped lang="scss">
-@use "@/styles/mixins.scss" as *;
+@use '@/styles/mixins.scss' as *;
 
 .header {
   display: flex;

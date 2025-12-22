@@ -1,78 +1,83 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  modules: ['@pinia/nuxt', '@vite-pwa/nuxt', '@nuxt/eslint'],
+  devtools: { enabled: true },
   app: {
     head: {
       link: [
         {
-          rel: "icon",
-          type: "image/png",
-          sizes: "96x96",
-          href: "/favicon.png",
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '96x96',
+          href: '/favicon.png',
         },
         {
-          rel: "apple-touch-icon",
-          sizes: "180x180",
-          href: "/apple-touch-icon.png",
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/apple-touch-icon.png',
         },
         {
-          rel: "manifest",
-          href: "/manifest.webmanifest",
+          rel: 'manifest',
+          href: '/manifest.webmanifest',
         },
       ],
       meta: [
         {
-          name: "google-site-verification",
-          content: "r9rvLpe3DW-KVtzEcxfpC_Q9rzx2_lOMw5N_eL0iUTQ",
+          name: 'google-site-verification',
+          content: 'r9rvLpe3DW-KVtzEcxfpC_Q9rzx2_lOMw5N_eL0iUTQ',
         },
         {
-          name: "color-scheme",
-          content: "dark",
+          name: 'color-scheme',
+          content: 'dark',
         },
         {
-          name: "theme-color",
-          content: "#0b1a24",
+          name: 'theme-color',
+          content: '#0b1a24',
         },
       ],
     },
   },
-  compatibilityDate: "2025-07-15",
-  devtools: { enabled: true },
-  modules: ["@pinia/nuxt", "@vite-pwa/nuxt"],
-  css: ["@/styles/main.scss"],
+  css: ['@/styles/main.scss'],
   routeRules: {
-    "/": { redirect: "/fleas" },
-    "/fleas": { prerender: true },
+    '/': { redirect: '/fleas' },
+    '/fleas': { prerender: true },
   },
   devServer: {
-    host: "",
+    host: '',
+  },
+  compatibilityDate: '2025-07-15',
+  eslint: {
+    config: {
+      stylistic: false,
+    },
   },
   pwa: {
-    registerType: "autoUpdate",
+    registerType: 'autoUpdate',
     manifest: {
-      name: "Fleas Helper",
-      short_name: "Fleas Helper",
-      description: "Interactive checklist for collecting all fleas in Silksong",
-      theme_color: "#0b1a24",
-      background_color: "#0b1a24",
-      display: "standalone",
+      name: 'Fleas Helper',
+      short_name: 'Fleas Helper',
+      description: 'Interactive checklist for collecting all fleas in Silksong',
+      theme_color: '#0b1a24',
+      background_color: '#0b1a24',
+      display: 'standalone',
       icons: [
         {
-          src: "/web-app-manifest-192x192.png",
-          sizes: "192x192",
-          type: "image/png",
-          purpose: "maskable",
+          src: '/web-app-manifest-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+          purpose: 'maskable',
         },
         {
-          src: "/web-app-manifest-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "maskable",
+          src: '/web-app-manifest-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'maskable',
         },
       ],
     },
     workbox: {
-      navigateFallback: "/fleas",
-      globPatterns: ["**/*.{js,css,html,png,svg,ico,woff2}"],
+      navigateFallback: '/fleas',
+      globPatterns: ['**/*.{js,css,html,png,svg,ico,woff2}'],
     },
   },
 });
