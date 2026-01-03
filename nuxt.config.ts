@@ -79,6 +79,9 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: "/fleas",
       globPatterns: ["**/*.{js,css,html,png,svg,ico,woff2}"],
+      cleanupOutdatedCaches: true,
+      clientsClaim: true,
+      skipWaiting: true,
     },
   },
 });
