@@ -1,7 +1,7 @@
 <template>
   <nav class="navigation">
-    <NuxtLink key="fleas-link" to="/fleas" class="link">Fleas</NuxtLink>
-    <NuxtLink key="masks-link" to="/masks" class="link">Mask Shards</NuxtLink>
+    <NuxtLink to="/fleas" class="link">Fleas</NuxtLink>
+    <NuxtLink to="/masks" class="link">Mask Shards</NuxtLink>
   </nav>
 </template>
 

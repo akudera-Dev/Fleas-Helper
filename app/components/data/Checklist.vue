@@ -11,6 +11,7 @@
         v-if="filteringBy === 'all' || itemsToDisplay.length > 0"
         tag="div"
         :name="transitionName"
+        :css="transitionName ? true : false"
       >
         <div v-for="item in itemsToDisplay" :key="item.keyName" class="item-details">
           <div>

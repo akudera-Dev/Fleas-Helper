@@ -2,7 +2,12 @@
   <div class="file-info">
     <span v-if="!!file" class="save-file">{{ file.name }}</span>
     <div v-else class="error-message"><slot></slot></div>
-    <button type="button" class="close-button" @click="closeFileInfo">
+    <button
+      type="button"
+      class="close-button"
+      aria-label="Close uploaded file details"
+      @click="closeFileInfo"
+    >
       <IconsCross />
     </button>
   </div>

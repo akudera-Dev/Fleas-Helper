@@ -7,7 +7,12 @@
       <div v-if="isMenuOpen" class="menu-overlay"></div>
     </Transition>
     <aside ref="side-menu" class="side-menu" :class="isMenuOpen ? 'open' : ''">
-      <button type="button" class="menu-button" @click="handleMenu">
+      <button
+        type="button"
+        class="menu-button"
+        aria-label="Close navigation menu"
+        @click="handleMenu"
+      >
         <IconsArrow class="button-arrow" width="20" />
       </button>
       <ItemsHelpersNavigation :inert="isMenuOpen ? undefined : ''" />

@@ -1,6 +1,6 @@
 <template>
   <header class="header container">
-    <h1 class="title"><slot name="title"></slot></h1>
+    <h1 class="title">SilkSong <slot name="titleDesc"></slot> Helper</h1>
     <p class="subtitle"><slot name="description"></slot></p>
     <hr />
   </header>
@@ -18,6 +18,8 @@
 }
 
 .title {
+  display: flex;
+  column-gap: 5px;
   font-family: var(--font-accent);
   @include fluid-text(32, 40);
   font-weight: 700;

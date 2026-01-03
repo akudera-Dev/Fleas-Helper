@@ -1,6 +1,6 @@
 <template>
   <div class="fleas-page">
-    <NuxtLayout name="helper">
+    <NuxtLayout name="helper" icon-path="/icons/flea.png" icon-alt="Fleas">
       <DataFileUpload :data-update="dataUpdate" />
       <DataChecklist
         title="Flea checklist"
@@ -19,7 +19,7 @@ import { FILE_DATA } from "~/utils/fileData";
 definePageMeta({
   layout: "with-sidenav",
   pageTransition: { name: "page", mode: "out-in" },
-  title: "SilkSong Fleas Helper",
+  titleDesc: "Fleas",
   description: "Track missing fleas and view them on the interactive map",
 });
 

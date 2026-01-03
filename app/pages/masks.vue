@@ -1,6 +1,6 @@
 <template>
   <div class="masks-page">
-    <NuxtLayout name="helper">
+    <NuxtLayout name="helper" icon-path="/icons/mask.png" icon-alt="Masks">
       <DataFileUpload :data-update="dataUpdate" />
       <DataChecklist
         title="Flea checklist"
@@ -16,7 +16,7 @@
 definePageMeta({
   layout: "with-sidenav",
   pageTransition: { name: "page", mode: "out-in" },
-  title: "SilkSong Masks Helper",
+  titleDesc: "Masks",
   description: "Track mask shards and view them on the interactive map",
 });
 
